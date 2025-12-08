@@ -19,10 +19,9 @@ $user_name = $_SESSION['nama_lengkap'];
     <div class="bg-dark text-white border-end sidebar-wrapper" id="sidebar-wrapper">
         <div class="sidebar-heading p-4 text-center border-bottom text-primary fw-bold fs-5"><i class="fas fa-user-md me-2"></i> DR. PANEL</div>
         <div class="list-group list-group-flush">
-            <a href="#" class="list-group-item list-group-item-action bg-dark text-white active"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
-            <a href="#" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-procedures me-2"></i> Daftar Kunjungan</a>
-            <a href="#" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-history me-2"></i> Riwayat Pasien</a>
-            <a href="#" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-prescription-bottle-alt me-2"></i> Input Resep</a>
+            <a href="dashboard_dokter.php" class="list-group-item list-group-item-action bg-dark text-white active"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+            <a href="daftar_kunjungan.php" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-procedures me-2"></i> Daftar Kunjungan</a>
+            <a href="riwayat_pasien.php" class="list-group-item list-group-item-action bg-dark text-white"><i class="fas fa-history me-2"></i> Riwayat Pasien</a>
         </div>
     </div>
     <div id="page-content-wrapper">
@@ -45,7 +44,7 @@ $user_name = $_SESSION['nama_lengkap'];
                             <tr><th>No.</th><th>Pasien</th><th>Keluhan</th><th>Waktu</th><th>Aksi</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>1</td><td>Udin Sedunia</td><td>Sakit Gigi</td><td>07:59</td><td><button class="btn btn-sm btn-info"><i class="fas fa-file-medical"></i> Periksa</button></td></tr>
+                            
                         </tbody>
                     </table>
                 </div>
