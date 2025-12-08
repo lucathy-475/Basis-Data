@@ -1,0 +1,104 @@
+/*
+ * style.css
+ * Styling kustom untuk Klinik Sehat
+ */
+
+:root {
+    --bs-primary: #007bff; /* Biru Kesehatan */
+    --bs-dark: #343a40;
+}
+
+/* --- Halaman Login --- */
+.login-body {
+    background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%); /* Latar belakang gradient menenangkan */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-card {
+    border-radius: 15px; /* Sudut membulat */
+    overflow: hidden;
+    max-width: 450px;
+    margin: auto;
+}
+
+.login-card .card-title {
+    color: var(--bs-primary);
+}
+
+.login-body .btn-primary {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    transition: background-color 0.3s;
+}
+
+.login-body .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* --- Halaman Dashboard --- */
+#wrapper {
+    overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    width: 250px;
+    transition: margin 0.3s;
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+/* Kondisi saat sidebar di-toggle */
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: -250px;
+}
+
+/* Menyesuaikan ukuran layar besar */
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -250px;
+    }
+}
+
+/* Navigasi Sidebar */
+.sidebar-heading {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.list-group-item-action:hover {
+    color: var(--bs-primary) !important;
+    background-color: #495057 !important;
+}
+
+.list-group-item.active {
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+}
+
+/* Kartu Statistik Dashboard */
+.card {
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Warna Kartu */
+.bg-primary { background-color: var(--bs-primary) !important; }
+.bg-warning { background-color: #ffc107 !important; }
+.bg-success { background-color: #28a745 !important; }
+.bg-info { background-color: #17a2b8 !important; }
