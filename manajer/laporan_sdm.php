@@ -67,6 +67,26 @@
             margin-left: 240px;
             padding-top: 90px;
         }
+
+        /* PRINT MODE — Hilangkan Sidebar & Topbar */
+        @media print {
+            .sidebar,
+            .topbar,
+            .btn,
+            button {
+                display: none !important;
+            }
+
+            .content {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+
+            table {
+                zoom: 90%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -91,13 +111,24 @@
 <div class="content">
     <div class="container">
 
+        <!-- BUTTON EXPORT -->
+        <div class="d-flex justify-content-end mb-3">
+            <button onclick="window.print()" class="btn btn-danger me-2">
+                <i class="fas fa-file-pdf me-1"></i> Cetak PDF
+            </button>
+
+            <button onclick="exportExcel()" class="btn btn-success">
+                <i class="fas fa-file-excel me-1"></i> Export Excel
+            </button>
+        </div>
+
         <!-- DATA DOKTER -->
         <div class="card mb-4 shadow-sm rounded-3">
             <div class="card-header bg-primary text-white fw-bold">
                 <i class="fas fa-user-md me-2"></i> Data Dokter
             </div>
             <div class="card-body">
-                <table class="table table-hover">
+                <table id="tabelSDM" class="table table-hover">
                     <thead class="table-primary">
                         <tr>
                             <th>Nama</th>
@@ -139,6 +170,22 @@
 
     </div>
 </div>
+
+<!-- EXPORT EXCEL -->
+<script>
+function exportExcel() {
+    const table = document.getElementById("tabelSDM");
+    const html = table.outerHTML;
+
+    const blob = new Blob([html], { type: "application/vnd.ms-excel" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Laporan_SDM.xls";
+    a.click();
+}
+</script>
 
 </body>
 </html>

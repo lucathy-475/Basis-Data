@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
         body {
@@ -68,6 +68,24 @@
             margin-left: 240px;
             padding-top: 90px;
         }
+
+        /* PRINT MODE */
+        @media print {
+            .sidebar,
+            .topbar,
+            .btn,
+            button {
+                display: none !important;
+            }
+            .content {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+            table {
+                zoom: 90%;
+            }
+        }
     </style>
 </head>
 
@@ -75,46 +93,78 @@
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-    <h4 class="text-center mb-4">Manajer Panel</h4>
+    <h4>Klinik Sehat+</h4>
 
-    <a href="dashboard_manajer.php"><i class="fas fa-home me-2"></i> Dashboard</a>
+    <a href="dashboard_manajer.php"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
     <a href="laporan_sdm.php"><i class="fas fa-users me-2"></i> Laporan SDM</a>
     <a href="laporan_keuangan.php"><i class="fas fa-money-bill-wave me-2"></i> Laporan Keuangan</a>
-    <a href="statistik.php"><i class="fas fa-chart-bar me-2"></i> Statistik</a>
+    <a href="statistik_kunjungan.php"><i class="fas fa-chart-line me-2"></i> Statistik Kunjungan</a>
     <a href="stok_obat.php"><i class="fas fa-pills me-2"></i> Stok Obat</a>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+    <h5 class="m-0">
+        <i class="fas fa-pills me-2 text-primary"></i> Stok Obat & Logistik
+    </h5>
 </div>
 
 <!-- CONTENT -->
 <div class="content">
+    <div class="container">
 
-    <h2 class="mb-4 text-primary">
-        <i class="fas fa-box me-2"></i> Stok Obat & Logistik
-    </h2>
+        <!-- BUTTON EXPORT -->
+        <div class="d-flex justify-content-end mb-3">
+            <button onclick="window.print()" class="btn btn-danger me-2">
+                <i class="fas fa-file-pdf me-1"></i> Cetak PDF
+            </button>
 
-    <div class="card shadow-sm">
-        <div class="card-header bg-danger text-white">
-            <i class="fas fa-pills me-2"></i> Daftar Stok Obat
+            <button onclick="exportExcel()" class="btn btn-success">
+                <i class="fas fa-file-excel me-1"></i> Export Excel
+            </button>
         </div>
 
-        <div class="card-body">
-            <table class="table table-bordered table-hover">
-                <thead class="table-danger">
-                    <tr>
-                        <th>Nama Obat</th>
-                        <th>Stok</th>
-                        <th>Kadaluarsa</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>Paracetamol</td><td>250</td><td>2026-02-12</td></tr>
-                    <tr><td>Amoxicillin</td><td>80</td><td>2025-10-01</td></tr>
-                    <tr><td>Oralit</td><td>310</td><td>2027-01-15</td></tr>
-                </tbody>
-            </table>
+        <!-- DATA STOK OBAT -->
+        <div class="card mb-4 shadow-sm rounded-3">
+            <div class="card-header bg-danger text-white fw-bold">
+                <i class="fas fa-pills me-2"></i> Daftar Stok Obat
+            </div>
+            <div class="card-body">
+                <table id="tabelObat" class="table table-hover">
+                    <thead class="table-danger">
+                        <tr>
+                            <th>Nama Obat</th>
+                            <th>Stok</th>
+                            <th>Kadaluarsa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Paracetamol</td><td>250</td><td>2026-02-12</td></tr>
+                        <tr><td>Amoxicillin</td><td>80</td><td>2025-10-01</td></tr>
+                        <tr><td>Oralit</td><td>310</td><td>2027-01-15</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
     </div>
-
 </div>
+
+<!-- EXPORT EXCEL -->
+<script>
+function exportExcel() {
+    const table = document.getElementById("tabelObat");
+    const html = table.outerHTML;
+
+    const blob = new Blob([html], { type: "application/vnd.ms-excel" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Stok_Obat.xls";
+    a.click();
+}
+</script>
 
 </body>
 </html>

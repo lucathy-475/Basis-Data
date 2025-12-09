@@ -67,6 +67,26 @@
             margin-left: 240px;
             padding-top: 90px;
         }
+
+        @media print {
+    .sidebar,
+    .topbar,
+    .btn,
+    button {
+        display: none !important;
+    }
+
+    .content {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+
+    table {
+        zoom: 90%;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -90,7 +110,18 @@
 <!-- CONTENT -->
 <div class="content">
     <div class="container">
-        
+
+        <!-- BUTTON EXPORT -->
+        <div class="d-flex justify-content-end mb-3">
+            <button onclick="window.print()" class="btn btn-danger me-2">
+                <i class="fas fa-file-pdf me-1"></i> Cetak PDF
+            </button>
+
+            <button onclick="exportExcel()" class="btn btn-success">
+                <i class="fas fa-file-excel me-1"></i> Export Excel
+            </button>
+        </div>
+
         <!-- Kartu Laporan -->
         <div class="row">
 
@@ -129,7 +160,7 @@
                 <i class="fas fa-file-invoice-dollar me-2"></i> Detail Transaksi Terakhir
             </div>
             <div class="card-body">
-                <table class="table table-hover">
+                <table id="tabelKeuangan" class="table table-hover">
                     <thead class="table-warning">
                         <tr>
                             <th>Tanggal</th>
@@ -148,6 +179,22 @@
 
     </div>
 </div>
+
+<!-- ========== SCRIPT EXPORT EXCEL ========== -->
+<script>
+function exportExcel() {
+    const table = document.getElementById("tabelKeuangan");
+    const html = table.outerHTML;
+
+    const blob = new Blob([html], { type: "application/vnd.ms-excel" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Laporan_Keuangan.xls";
+    a.click();
+}
+</script>
 
 </body>
 </html>

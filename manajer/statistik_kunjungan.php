@@ -7,7 +7,6 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
@@ -15,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-          body {
+        body {
             background: #f5f7fb;
             font-family: 'Segoe UI', sans-serif;
         }
@@ -51,25 +50,25 @@
             border-left: 4px solid #ffc107;
         }
 
-        /* TOPBAR */
-        .topbar {
-            width: calc(100% - 240px);
-            margin-left: 240px;
-            height: 65px;
-            background: #ffffff;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            position: fixed;
-            top: 0;
-            z-index: 10;
-        }
-
         /* CONTENT */
         .content {
             margin-left: 240px;
-            padding-top: 90px;
+            padding-top: 40px;
+        }
+
+        /* PRINT MODE */
+        @media print {
+            .sidebar,
+            button,
+            .btn {
+                display: none !important;
+            }
+
+            .content {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
         }
     </style>
 </head>
@@ -83,7 +82,7 @@
     <a href="dashboard_manajer.php"><i class="fas fa-home me-2"></i> Dashboard</a>
     <a href="laporan_sdm.php"><i class="fas fa-users me-2"></i> Laporan SDM</a>
     <a href="laporan_keuangan.php"><i class="fas fa-money-bill-wave me-2"></i> Laporan Keuangan</a>
-    <a href="statistik.php"><i class="fas fa-chart-bar me-2"></i> Statistik</a>
+    <a href="statistik_kunjungan.php"><i class="fas fa-chart-bar me-2"></i> Statistik</a>
     <a href="stok_obat.php"><i class="fas fa-pills me-2"></i> Stok Obat</a>
 </div>
 
@@ -94,7 +93,18 @@
         <i class="fas fa-chart-bar me-2"></i> Statistik Kunjungan
     </h2>
 
-    <!-- ========== CARD GRAFIK KUNJUNGAN ========== -->
+    <!-- BUTTON EXPORT -->
+    <div class="d-flex justify-content-end mb-3">
+        <button onclick="window.print()" class="btn btn-danger me-2">
+            <i class="fas fa-file-pdf me-1"></i> Cetak PDF
+        </button>
+
+        <button onclick="exportExcel()" class="btn btn-success">
+            <i class="fas fa-file-excel me-1"></i> Export Excel
+        </button>
+    </div>
+
+    <!-- ========== CARD GRAFIK ========== -->
     <div class="card shadow-sm">
         <div class="card-header bg-info text-white">
             <i class="fas fa-chart-line me-2"></i> Grafik Kunjungan Bulanan
@@ -108,17 +118,45 @@
 
 <!-- ================= CHART SCRIPT ================= -->
 <script>
+const bulan = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+const dataKunjungan = [120, 140, 134, 156, 167, 178, 189, 174, 160, 145, 155, 190];
+
 new Chart(document.getElementById("chartKunjungan"), {
     type: "line",
     data: {
-        labels: ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"],
+        labels: bulan,
         datasets: [{
             label: "Jumlah Kunjungan",
-            data: [120, 140, 134, 156, 167, 178, 189, 174, 160, 145, 155, 190],
-            borderWidth: 2
+            data: dataKunjungan,
+            borderWidth: 2,
+            borderColor: "#0d6efd"
         }]
     }
 });
+</script>
+
+<!-- EXPORT EXCEL -->
+<script>
+function exportExcel() {
+    let tableHTML = `
+        <table border='1'>
+            <tr><th>Bulan</th><th>Jumlah Kunjungan</th></tr>
+    `;
+
+    for (let i = 0; i < bulan.length; i++) {
+        tableHTML += `<tr><td>${bulan[i]}</td><td>${dataKunjungan[i]}</td></tr>`;
+    }
+
+    tableHTML += "</table>";
+
+    const blob = new Blob([tableHTML], { type: "application/vnd.ms-excel" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Statistik_Kunjungan.xls";
+    a.click();
+}
 </script>
 
 </body>
