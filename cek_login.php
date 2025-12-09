@@ -35,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // --- LOGIKA PENGARAHAN YANG SUDAH KOREK ---
             
             if ($role === 'kasir') {
+<<<<<<< HEAD
                 header("Location: dashboard_resepsionis.php"); 
             } elseif ($role === 'apoteker') {
                 // PATH SUDAH BENAR: Langsung masuk ke folder apoteker
@@ -49,6 +50,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             exit;
 
+=======
+                 // Resepsionis dalam permintaan Anda adalah Kasir dalam DB
+                header("Location: dashboard_resepsionis.php"); 
+                exit;
+            } elseif ($role === 'apoteker') {
+                 // Apoteker tidak diminta, jadi arahkan ke dashboard default jika ada
+                header("Location: dashboard.php"); 
+                exit;
+            } else {
+                 // Admin, Dokter, dan role lain
+                header("Location: dashboard_" . $role . ".php");
+                exit;
+            }
+>>>>>>> 928d8940cd9a0bd0cc5792c5edb92d1cfbe2b6d6
         } else {
             $_SESSION['login_error'] = 'Password salah.';
         }
